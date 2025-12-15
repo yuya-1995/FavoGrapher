@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "@/app/styles/page.module.css";
-import { getPostById } from "@/app/utils/api";
-import { PostType } from "@/app/utils/types";
+import { getPostById } from "@/app/api/posts/route";
+import { PostType } from "@/app/types/types";
 
 type Props = {
   params: {

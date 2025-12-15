@@ -12,13 +12,20 @@ export class PostsController {
     }
 
     @Post()
-    create(@Body() post: PostType): void{
-        this.postsService.create(post);
+    async create(@Body() post: Partial<PostType>): Promise<PostType> {
+    const created = await this.postsService.create(post as PostType);
+    return {
+        id: created.id,
+        title: created.title,
+        content: created.content,
+        author: created.author,
+        createdAt: created.createdAt.toISOString(),
+    };
     }
 
-    @Get(":id")
-    findById(@Param("id") id: string): PostType | undefined {
-        const post = this.postsService.findById(id);
-        return post;
+    @Get(':id')
+    async findById(@Param('id') id: string): Promise<PostType | undefined> {
+        return await this.postsService.findById(id);
     }
+
 }
