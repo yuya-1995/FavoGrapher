@@ -13,10 +13,12 @@ export default function NewPostPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!session) {
+    if (!session?.user) {
       alert("ログインしてください");
       return;
     }
+
+    console.log(session.user?.id);
 
     // ここで API に投稿データを送信
     const res = await fetch("http://localhost:5000/posts", { // NestJS のサーバーURL
@@ -24,7 +26,12 @@ export default function NewPostPage() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title, content, author: session.user?.name || "匿名" }),
+      body: JSON.stringify({ 
+        title, 
+        content, 
+        author: session.user?.name || "匿名",
+        user_id: session.user?.id || "999"
+        })
     });
 
     if (res.ok) {

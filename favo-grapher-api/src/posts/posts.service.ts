@@ -22,6 +22,7 @@ export class PostsService {
             title: post.title,
             content: post.content,
             author: post.author,
+            user_id: post.user_id,
             createdAt: post.createdAt.toISOString(),
         }));
     }
@@ -34,6 +35,7 @@ export class PostsService {
             title: post.title,
             content: post.content,
             author: post.author,
+            user_id: post.user_id,
             createdAt: post.createdAt.toISOString(),
         };
     }
@@ -44,6 +46,7 @@ export class PostsService {
             title: post.title,
             content: post.content,
             author: post.author,
+            user_id: post.user_id,
             });
             return await this.postRepository.save(newPost);
         } catch (error) {

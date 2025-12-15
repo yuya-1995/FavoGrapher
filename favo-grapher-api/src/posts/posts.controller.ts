@@ -19,6 +19,7 @@ export class PostsController {
         title: created.title,
         content: created.content,
         author: created.author,
+        user_id: created.user_id,
         createdAt: created.createdAt.toISOString(),
     };
     }
