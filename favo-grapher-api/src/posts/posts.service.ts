@@ -1,19 +1,67 @@
 import { Injectable } from '@nestjs/common';
 import { PostType } from './posts.interface';
+import { PostEntity } from './posts.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class PostsService {
     private readonly posts: PostType[] = [];
 
-    findAll(): PostType[] {
-        return this.posts;
+    constructor(
+        @InjectRepository(PostEntity)
+        private readonly postRepository: Repository<PostEntity>,
+    ) {}
+
+    async findAll(): Promise<PostType[]> {
+        const posts = await this.postRepository.find({
+        order: { created_at: 'DESC' }, // 新しい順に
+        });
+        return posts.map((post) => ({
+            id: post.id,
+            image: post.image,
+            title: post.title,
+            content: post.content,
+            author: post.author,
+            user_id: post.user_id,
+            delete_flg: post.delete_flg, 
+            created_at: post.created_at.toISOString(),
+        }));
     }
 
-    create(post: PostType){
-        this.posts.push(post);
+    async findById(id: string): Promise<PostType | undefined> {
+        const post = await this.postRepository.findOneBy({ id });
+        if (!post) return undefined;
+        return {
+            id: post.id,
+            image: post.image,
+            title: post.title,
+            content: post.content,
+            author: post.author,
+            user_id: post.user_id,
+            delete_flg: post.delete_flg, 
+            created_at: post.created_at.toISOString(),
+        };
     }
 
-    findById(id: string): PostType | undefined {
-        return this.posts.find((post) => post.id === id);
+    async create(post: PostType): Promise<PostEntity> {
+        try {
+            const newPost = this.postRepository.create({
+            image: post.image,
+            title: post.title,
+            content: post.content,
+            author: post.author,
+            user_id: post.user_id,
+            });
+            return await this.postRepository.save(newPost);
+        } catch (error) {
+            console.error("投稿作成エラー:", error);
+            throw error; // NestJS が 500 を返す
+        }
     }
+
+    async updateImage(id: string, image: string) {
+        await this.postRepository.update(id, { image });
+    }
+
 }
