@@ -41,12 +41,14 @@
 }
 
 .title {
+  position: absolute;
   bottom: 28px;
   font-size: 0.85rem;
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #fff;
 }
 
 .author {
@@ -60,14 +62,33 @@
   filter: brightness(0.85);
 }
 
+/* 投稿詳細ページ */
+
+.detailImageWrapper {
+  width: 100%; /* 横幅いっぱい */
+  max-width: 800px; /* PCでは画像の元サイズに制限 */
+  margin: 0 auto;   /* 中央寄せ */
+}
+
+.detailImage {
+  
+}
+
+.detailTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
 @media (max-width: 768px) {
   .postList {
     grid-template-columns: repeat(3, 1fr);
     gap: 2px;
   }
-
   .title,
   .author {
     display: none; /* スマホは文字なし */
   }
 }
+
+

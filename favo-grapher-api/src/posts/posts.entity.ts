@@ -8,10 +8,13 @@ export class PostEntity {
   @Column()
   user_id: string;
 
+  @Column({ nullable: true })
+  image?: string;
+
   @Column()
   title: string;
 
-  @Column()
+  @Column({ nullable: true })
   content: string;
 
   @Column()

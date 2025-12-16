@@ -15,11 +15,12 @@ export default async function Home() {
           <Link href={`/posts/${post.id}`} key={post.id}>
             <li className={styles.post}>
               <Image
-                src={`https://picsum.photos/800/800?random=${post.id}`}
-                alt=""
+                src={`${process.env.NEXT_PUBLIC_API_URL}${post.image}`}
+                alt={post.title}
                 fill
-                sizes="(max-width: 768px) 33vw, 300px"
-                className={styles.image}
+                style={{ objectFit: "cover", borderRadius: "12px 12px 0 0" }}
+                unoptimized
+                priority
               />
               <h2 className={styles.title}>{post.title}</h2>
               <p className={styles.author}>By {post.author}</p>

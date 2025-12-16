@@ -19,6 +19,7 @@ export class PostsService {
         });
         return posts.map((post) => ({
             id: post.id,
+            image: post.image,
             title: post.title,
             content: post.content,
             author: post.author,
@@ -33,6 +34,7 @@ export class PostsService {
         if (!post) return undefined;
         return {
             id: post.id,
+            image: post.image,
             title: post.title,
             content: post.content,
             author: post.author,
@@ -45,6 +47,7 @@ export class PostsService {
     async create(post: PostType): Promise<PostEntity> {
         try {
             const newPost = this.postRepository.create({
+            image: post.image,
             title: post.title,
             content: post.content,
             author: post.author,
@@ -55,6 +58,10 @@ export class PostsService {
             console.error("投稿作成エラー:", error);
             throw error; // NestJS が 500 を返す
         }
+    }
+
+    async updateImage(id: string, image: string) {
+        await this.postRepository.update(id, { image });
     }
 
 }

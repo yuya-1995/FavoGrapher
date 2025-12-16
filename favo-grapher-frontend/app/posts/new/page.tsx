@@ -9,6 +9,7 @@ export default function NewPostPage() {
   const { data: session } = useSession();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [image, setImage] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,18 +19,22 @@ export default function NewPostPage() {
       return;
     }
 
+    if (!image) {
+      alert("画像を選択してください");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("author", session.user.session_nm || "匿名");
+    formData.append("user_id", session.user.session_id || "999");
+    formData.append("image", image);
+
     // ここで API に投稿データを送信
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`, { // NestJS のサーバーURL
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ 
-        title, 
-        content, 
-        author: session.user?.session_nm || "匿名",
-        user_id: session.user?.session_id || "999"
-        })
+      body: formData,
     });
 
     if (res.ok) {
@@ -43,6 +48,13 @@ export default function NewPostPage() {
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "5rem" }}>
       <h1>新しい投稿</h1>
       <form onSubmit={handleSubmit}>
+        <div style={{ marginBottom: "1rem" }}>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files?.[0] || null)}
+          />
+        </div>
         <div style={{ marginBottom: "1rem" }}>
           <input
             type="text"

@@ -1,5 +1,6 @@
 export interface PostType {
     id: string;
+    image: string | undefined,
     title: string;
     content: string;
     author: string;
