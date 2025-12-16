@@ -17,6 +17,9 @@ export class PostEntity {
   @Column()
   author: string;
 
+  @Column({ type: 'char', length: 1, default: '0' })
+  delete_flg: string; // 論理削除フラグ（"0": 有効, "1": 削除）
+
   @CreateDateColumn({ type: 'timestamp' })
-  createdAt: Date;
+  created_at: Date;
 }

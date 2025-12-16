@@ -17,7 +17,7 @@ export default async function PostPage({ params }: Props) {
         <h1 className={styles.title}>{post.title}</h1>
         <p className={styles.content}>{post.content}</p>
         <p className={styles.meta}>{post.author}</p>
-        <p className={styles.meta}>{post.createdAt}</p>
+        <p className={styles.meta}>{post.created_at}</p>
     </div>
   );
 }

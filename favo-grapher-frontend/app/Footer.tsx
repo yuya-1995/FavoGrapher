@@ -7,8 +7,9 @@ export default function Footer() {
 
   const menuItems = [
     { label: "🔍", path: "/" },
+    { label: "🏠", path: "/posts" },
     { label: "投稿", path: "/posts/new" },
-    { label: "マイページ", path: "/mypage" },
+    { label: "👤", path: "/mypage" },
   ];
 
   return (
@@ -22,7 +23,7 @@ export default function Footer() {
         borderTop: "1px solid #eaeaea",
         display: "flex",
         justifyContent: "space-around",
-        padding: "0.5rem 0",
+        padding: "10px 0",
         boxShadow: "0 -1px 5px rgba(0,0,0,0.1)",
         zIndex: 100,
       }}

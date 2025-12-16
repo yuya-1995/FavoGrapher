@@ -1,7 +1,6 @@
 "use client";
 
 import { useSession, signOut } from "next-auth/react";
-import Link from "next/link";
 
 export default function Header() {
   const { data: session } = useSession();
@@ -17,8 +16,8 @@ export default function Header() {
       }}
     >
       {/* 左側：サービス名 */}
-      <div style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
-        <Link href="/posts">FavoGrapher</Link>
+      <div style={{ fontWeight: "bold", fontSize: "1.5rem" }}>
+        FavoGraph
       </div>
 
       {/* 右側：ログアウトボタン */}

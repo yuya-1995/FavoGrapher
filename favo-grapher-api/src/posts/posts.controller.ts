@@ -13,15 +13,16 @@ export class PostsController {
 
     @Post()
     async create(@Body() post: Partial<PostType>): Promise<PostType> {
-    const created = await this.postsService.create(post as PostType);
-    return {
-        id: created.id,
-        title: created.title,
-        content: created.content,
-        author: created.author,
-        user_id: created.user_id,
-        createdAt: created.createdAt.toISOString(),
-    };
+        const created = await this.postsService.create(post as PostType);
+        return {
+            id: created.id,
+            title: created.title,
+            content: created.content,
+            author: created.author,
+            user_id: created.user_id,
+            delete_flg: created.delete_flg,
+            created_at: created.created_at.toISOString(),
+        };
     }
 
     @Get(':id')

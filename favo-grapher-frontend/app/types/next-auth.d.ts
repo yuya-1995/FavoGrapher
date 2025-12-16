@@ -8,11 +8,13 @@ declare module "next-auth" {
       email?: string | null;
       image?: string | null;
       id?: string | null; // Google ID を追加
+      session_id?: string | null; // ユーザーID
+      session_nm?: string | null; // ユーザーネームを追加
     };
   }
 
   interface User {
     // 必要であれば追加プロパティ
-    id_: string | null; // JWT に追加した Google ID
+    id: string | null; // JWT に追加した Google ID
   }
 }

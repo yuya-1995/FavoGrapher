@@ -18,10 +18,8 @@ export default function NewPostPage() {
       return;
     }
 
-    console.log(session.user?.id);
-
     // ここで API に投稿データを送信
-    const res = await fetch("http://localhost:5000/posts", { // NestJS のサーバーURL
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`, { // NestJS のサーバーURL
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -29,8 +27,8 @@ export default function NewPostPage() {
       body: JSON.stringify({ 
         title, 
         content, 
-        author: session.user?.name || "匿名",
-        user_id: session.user?.id || "999"
+        author: session.user?.session_nm || "匿名",
+        user_id: session.user?.session_id || "999"
         })
     });
 
@@ -42,7 +40,7 @@ export default function NewPostPage() {
   };
 
   return (
-    <div style={{ padding: "1rem" }}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "5rem" }}>
       <h1>新しい投稿</h1>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: "1rem" }}>
@@ -64,9 +62,11 @@ export default function NewPostPage() {
             required
           />
         </div>
-        <button type="submit" style={{ padding: "0.5rem 1rem" }}>
-          投稿
-        </button>
+        <div style={{ textAlign: "center" }}>
+          <button type="submit" style={{ padding: "0.5rem 1rem" }}>
+            投稿
+          </button>
+        </div>
       </form>
     </div>
   );

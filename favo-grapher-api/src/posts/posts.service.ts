@@ -15,7 +15,7 @@ export class PostsService {
 
     async findAll(): Promise<PostType[]> {
         const posts = await this.postRepository.find({
-        order: { createdAt: 'DESC' }, // 新しい順に
+        order: { created_at: 'DESC' }, // 新しい順に
         });
         return posts.map((post) => ({
             id: post.id,
@@ -23,7 +23,8 @@ export class PostsService {
             content: post.content,
             author: post.author,
             user_id: post.user_id,
-            createdAt: post.createdAt.toISOString(),
+            delete_flg: post.delete_flg, 
+            created_at: post.created_at.toISOString(),
         }));
     }
 
@@ -36,7 +37,8 @@ export class PostsService {
             content: post.content,
             author: post.author,
             user_id: post.user_id,
-            createdAt: post.createdAt.toISOString(),
+            delete_flg: post.delete_flg, 
+            created_at: post.created_at.toISOString(),
         };
     }
 

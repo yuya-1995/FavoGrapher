@@ -1,29 +1,73 @@
+/* 全体 */
 .container {
-  max-width: 800px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
+  padding-bottom: 60px;
 }
 
-.title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.author {
-  font-size: 1rem;
-  color: #777;
-  margin-bottom: 1rem;
-}
-
+/* グリッド */
 .postList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px; /* インスタっぽく狭い */
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
+/* カード（正方形） */
 .post {
-  margin-bottom: 2rem;
-  border-bottom: 1px solid #5189ba;
-  padding-bottom: 1rem;
+  position: relative;
+  aspect-ratio: 1 / 1;
+}
+
+
+/* 正方形を作る */
+.post::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+/* テキスト配置 */
+.title,
+.author {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0,0,0,.6);
+}
+
+.title {
+  bottom: 28px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.author {
+  bottom: 8px;
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+/* hover（PC向け） */
+.post:hover {
+  filter: brightness(0.85);
+}
+
+@media (max-width: 768px) {
+  .postList {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .title,
+  .author {
+    display: none; /* スマホは文字なし */
+  }
 }

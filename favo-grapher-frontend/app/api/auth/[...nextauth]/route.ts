@@ -24,8 +24,21 @@ export const authOptions: NextAuthOptions = {
     },
     // session に JWT の id を追加
     async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id as string; // session.user.id に Google ID をセット
+      if (token?.id && session.user) {
+        session.user.id = token.id as string;
+        try {
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/users/${token.id}`
+          );
+          if (res.ok) {
+            const user = await res.json();
+            // 登録済み → user_id を session に入れる
+            session.user.session_id = user.user_id;
+            session.user.session_nm = user.name;
+          }
+        } catch (e) {
+          console.error("user fetch error", e);
+        }
       }
       return session;
     },
