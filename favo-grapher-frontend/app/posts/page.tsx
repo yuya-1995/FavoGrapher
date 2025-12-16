@@ -1,7 +1,8 @@
 import styles from "@/app/styles/page.module.css";
-import { getAllPosts } from "@/app/utils/api";
-import type { PostType } from "@/app/utils/types";
+import { getAllPosts } from "@/app/api/posts/route";
+import type { PostType } from "@/app/types/types";
 import Link from "next/link";
+import Image from "next/image";
 
 export default async function Home() {
 
@@ -9,14 +10,21 @@ export default async function Home() {
 
   return (
     <div className={styles.container}>
-      <h1>FavoGrapher</h1>
       <ul className={styles.postList}>
-        {posts.map((post: PostType) => (
+        {posts.map((post) => (
           <Link href={`/posts/${post.id}`} key={post.id}>
-            <li className={styles.post} key={post.id}>
+            <li className={styles.post}>
+              <Image
+                src={`${process.env.NEXT_PUBLIC_API_URL}${post.image}`}
+                alt={post.title}
+                fill
+                style={{ objectFit: "cover", borderRadius: "12px 12px 0 0" }}
+                unoptimized
+                priority
+              />
               <h2 className={styles.title}>{post.title}</h2>
-            <p className={styles.author}>By {post.author}</p>
-          </li>
+              <p className={styles.author}>By {post.author}</p>
+            </li>
           </Link>
         ))}
       </ul>
